@@ -31,7 +31,6 @@ print(is_pn(7))
 # 개선된 소수 판별 알고리즘
 import math
 
-
 def improved_is_pn(x):
     for i in range(2, int(math.sqrt(x) + 1)):
         if x % i == 0:

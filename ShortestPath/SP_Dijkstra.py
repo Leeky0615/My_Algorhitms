@@ -36,9 +36,9 @@
     - 총 O(v)번에 걸쳐서 최단 거리가 가장 짧은 노드를 선형탐색한다.
       따라서 전체 시간 복잡도는 O(v^2)이다.
 '''
+# 6 11
 
 import sys
-
 input = sys.stdin.readline
 INF = int(1e9)
 
@@ -54,6 +54,7 @@ vistied = [False] * (n + 1)
 distance = [INF] * (n + 1)
 
 # 모든 간선 정보를 입력받기
+
 for _ in range(m):
     a, b, c = map(int, input().split())
     # a번 노드에서 b번 노드로 가는 비용이 c라는 의미
@@ -84,7 +85,7 @@ def dijkstra(start):
         vistied[now] = True
         # 현재 노드와 연결된 다른 노드를 확인
         for j in graph[now]:
-            cost = distance[now] + j[i]
+            cost = distance[now] + j[1]
             # 현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧은 경우
             if cost < distance[j[0]]:
                 distance[j[0]] = cost

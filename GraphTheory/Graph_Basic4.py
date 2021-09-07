@@ -65,7 +65,6 @@ def topology_sort():
             if indegree[i] ==0:
                 q.append(i)
     # 위상 정렬을 수행한 결과 출력
-    for i in result:
-        print(i, end=' ')
+    print(*result)
 
 topology_sort()

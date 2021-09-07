@@ -75,20 +75,27 @@ quick_array = [5, 7, 9, 0, 3, 1, 6, 2, 4, 8]
 
 
 def quick_sort(array, start, end):
+    # 시작 위치와 끝 위치가 같거나 교차되면 종료
     if start >= end:
         return
     pivot = start
     left = start + 1
     right = end
+    # left와 right가 엇갈릴 때까지
     while left <= right:
+        # 피벗보다 큰 데이터를 찾을 때까지 반복
         while left <= end and array[left] <= array[pivot]:
             left += 1
+        # 피벗보다 작은 데이터를 찾을 때까지 반복
         while right > start and array[right] >= array[pivot]:
             right -= 1
+        # 엇갈렸다면(left>right) 작은 데이터와 피벗을 스왑
         if left > right:
             array[right], array[pivot] = array[pivot], array[right]
+        # 아니라면 작은 데이터와 큰 데이터를 스왑
         else:
             array[left], array[right] = array[right], array[left]
+    # 분할 이후 왼쪽 부분과 오른쪽 부분에서 각각 수행
     quick_sort(array, start, right - 1)
     quick_sort(array, right + 1, end)
 
@@ -101,15 +108,22 @@ print('---------- 퀵 정렬(리스트 컴프리헨션 버전) -----------')
 
 quick_array = [7, 5, 9, 0, 3, 1, 6, 2, 4, 8]
 
+
 def quick_sort(array):
+    # 리스트가 하나 이하의 원소만을 담고 있다면 종료
     if len(array) <= 1:
         return array
+    # 피벗은 첫 번째 원소
     pivot = array[0]
+    # 피벗을 제외한 리스트
     tail = array[1:]
 
+    # 분할된 왼쪽 부분
     left_side = [x for x in tail if x <= pivot]
+    # 반할된 오른쪽 부분
     right_side = [x for x in tail if x > pivot]
 
+    # 분할 이후 왼쪽 부분과 오른쪽 부분에서 각각 정렬 수행하고, 전체 리스트 반환
     return quick_sort(left_side) + [pivot] + quick_sort(right_side)
 
 
@@ -119,14 +133,17 @@ print(quick_sort(quick_array))
 print('---------- 계수 정렬 -----------')
 
 array = [7, 5, 9, 0, 3, 1, 6, 2, 9, 1, 4, 8, 0, 5, 2]
-count = [0] * (max(array) +1)
+# 모든 범위를 포함하는 리스트 선언(모든 값 0으로 초기화)
+count = [0] * (max(array) + 1)
 
 for i in range(len(array)):
+    # 각 데이터에 해당하는 인덱스의 값 증가
     count[array[i]] += 1
 
+# 리스트에 기록된 정렬 정보 확인
 for i in range(len(count)):
     for j in range(count[i]):
-        print(i, end=' ') # 띄어쓰기를 구분으로 등장한 횟수만큼 인덱스 출력
+        print(i, end=' ')  # 띄어쓰기를 구분으로 등장한 횟수만큼 인덱스 출력
 print()
 
 # 선택 정렬과 기본 정렬 라이브러리 수행 시간 비교
@@ -144,11 +161,11 @@ start_time = time.time()
 
 # 선택 정렬 프로그램 소스코드
 for i in range(len(array)):
-    min_index = i # 가장 작은 우너소의 인덱스
-    for j in range(i+1, len(array)):
+    min_index = i  # 가장 작은 우너소의 인덱스
+    for j in range(i + 1, len(array)):
         if array[min_index] > array[j]:
             min_index = j
-    array[i],array[min_index] = array[min_index], array[i]
+    array[i], array[min_index] = array[min_index], array[i]
 
 # 측정 종료
 end_time = time.time()
@@ -171,3 +188,38 @@ array.sort()
 end_time = time.time()
 # 수행 시간 출력
 print("기본 정렬 라이브러리 성능 측정 : ", end_time - start_time)
+
+print('---------- 병합 정렬 -----------')
+merge_array = [7, 5, 9, 0, 3, 1, 6, 2, 4, 8]
+def merge_sort(arr):
+    if len(arr) < 2:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+
+def merge(left, right):
+    i = 0
+    j = 0
+    # 정렬할 리스트
+    sorted_list = []
+
+    while i < len(left) and j < len(right):
+        if left[i] < right[j]:
+            sorted_list.append(left[i])
+            i += 1
+        else:
+            sorted_list.append(right[j])
+            j += 1
+    while i < len(left):
+        sorted_list.append(left[i])
+        i += 1
+    while j < len(right):
+        sorted_list.append(right[j])
+        j += 1
+    return sorted_list
+
+
+print(merge_sort(merge_array))

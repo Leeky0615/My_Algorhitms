@@ -31,5 +31,4 @@ def prefixsum(left, right):
 
     return prefix_sum[right] - prefix_sum[left - 1]
 
-
 print(prefixsum(3, 4))
